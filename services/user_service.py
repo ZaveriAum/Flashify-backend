@@ -17,11 +17,6 @@ class UserService:
         return User.query.filter_by(email=email).first()
 
     @staticmethod
-    def if_user_exit(id):
-        user = User.query.filter_by(id=id).first()
-        return True if user else False
-
-    @staticmethod
     def login(data):
         user = UserService.get_user_by_email(data["email"])
         if user and check_password_hash(user.password, data["password"]):

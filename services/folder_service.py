@@ -1,16 +1,12 @@
 from models.folder import Folder
 from utils.database import db
-from services.user_service import UserService
 
 class FolderService:
     
     @staticmethod
     def get_folders(user_id):
-        if UserService.if_user_exit(user_id):
-            folders = Folder.query.filter_by(user_id=user_id).all()
-            return [folder.to_dict() for folder in folders]
-        else:
-            raise ValueError("User doesn't exists with given id.")
+        folders = Folder.query.filter_by(user_id=user_id).all()
+        return [folder.to_dict() for folder in folders]
 
     @staticmethod
     def create_folder(user_id, folder):

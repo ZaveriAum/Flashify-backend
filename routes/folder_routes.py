@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request
 from controllers.folder_controller import FolderController
 
 folder_blueprint = Blueprint("folder", __name__)
