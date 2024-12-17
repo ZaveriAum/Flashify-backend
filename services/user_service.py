@@ -3,6 +3,7 @@ from utils.database import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
 class UserService:
+
     @staticmethod
     def signup(user):
         hashed_password = generate_password_hash(user["password"])
@@ -14,6 +15,11 @@ class UserService:
     @staticmethod
     def get_user_by_email(email):
         return User.query.filter_by(email=email).first()
+
+    @staticmethod
+    def if_user_exit(id):
+        user = User.query.filter_by(id=id).first()
+        return True if user else False
 
     @staticmethod
     def login(data):
