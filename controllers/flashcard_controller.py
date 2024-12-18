@@ -41,7 +41,7 @@ class FlashCardController:
                 "status": True,
                 "message": "Flashcard updated successfully",
                 "updated flashcard": updated_flashcard
-                }), 204
+                }), 200
         except Exception as e:
             return jsonify({
                 "status": False,

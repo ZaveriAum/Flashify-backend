@@ -41,7 +41,7 @@ class FolderController:
                 "status": True,
                 "message": "Folder updated successfully",
                 "updated folder": updated_folder
-                }), 204
+                }), 200
         except Exception as e:
             return jsonify({
                 "status": False,
