@@ -1,5 +1,6 @@
 from .user_service import UserService
 from .folder_service import FolderService
 from .flashcard_service import FlashCardService
+from .ai_service import AIService
 
-__all__ = ["UserService", "FolderService", "FlashCardService"]
+__all__ = ["UserService", "FolderService", "FlashCardService", "AIService"]
