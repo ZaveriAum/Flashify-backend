@@ -26,7 +26,7 @@ class FolderService:
             old_folder.name = folder["name"]
             old_folder.description = folder["description"]
             db.session.commit()
-            return folder.to_dict()
+            return old_folder.to_dict()
 
     @staticmethod
     @AuthDecorator.jwt_auth

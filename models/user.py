@@ -1,4 +1,5 @@
 from utils.database import db
+from marshmallow import Schema, fields, validate, ValidationError
 
 class User(db.Model):
     __tablename__ = "users"
@@ -19,3 +20,12 @@ class User(db.Model):
             "username": self.username,
             "email": self.email,
         }
+
+class SignupSchema(Schema):
+    username = fields.String(required=True, validate=validate.Length(min=2, max=15), error_messages={"required": "Username is required", "null": "Username cannot be empty"})
+    email = fields.Email(required=True, validate=validate.Length(min=5, max=55), error_messages={"required": "Valid email is required"})
+    password = fields.String(required=True, validate=validate.Length(min=8, max=20), error_messages={"required": "Password is required", "null": "Password cannot be empty"})
+
+class LoginSchema(Schema):
+    email = fields.Email(required=True, validate=validate.Length(min=5, max=55), error_messages={"required": "Valid email is required"})
+    password = fields.String(required=True ,validate=validate.Length(min=8, max=20), error_messages={"required": "Password cannot be empty"})

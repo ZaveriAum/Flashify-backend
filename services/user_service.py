@@ -24,15 +24,18 @@ class UserService:
     @staticmethod
     def login(data):
         user = UserService.get_user_by_email(data["email"])
-        if user != None and check_password_hash(user.password, data["password"]):
-            token = jwt.encode({
-                'email': data["email"],
-                'expiration': str(datetime.utcnow() + timedelta(seconds=3600))
-            },
-            Config.JWT_SECRET_KEY)
-            return {
-                "token": token,
-            }
+        if user != None:
+            if check_password_hash(user.password, data["password"]):
+                token = jwt.encode({
+                    'email': data["email"],
+                    'expiration': str(datetime.utcnow() + timedelta(seconds=3600))
+                },
+                Config.JWT_SECRET_KEY)
+                return {
+                    "token": token,
+                }
+            else:
+                raise ValueError("Invalid credentials")
         raise ValueError("User does not exists.")
 
     @staticmethod
