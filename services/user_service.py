@@ -31,9 +31,7 @@ class UserService:
                     'expiration': str(datetime.utcnow() + timedelta(seconds=3600))
                 },
                 Config.JWT_SECRET_KEY)
-                return {
-                    "token": token,
-                }
+                return (user, token)
             else:
                 raise ValueError("Invalid credentials")
         raise ValueError("User does not exists.")

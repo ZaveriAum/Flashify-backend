@@ -24,4 +24,4 @@ def update_folder(id):
 
 @folder_blueprint.route("/<id>", methods=["DELETE"], endpoint="delete_folders")
 def delete_folder(id):
-        return controller.delete_folder(id)
+    return controller.delete_folder(id)

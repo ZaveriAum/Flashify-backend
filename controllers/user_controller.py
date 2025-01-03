@@ -9,11 +9,8 @@ class UserController:
             user = UserService.signup(user_data)
             return jsonify({
                 "status": True,
-                "message": "Signed up successfully",
-                "id": user.id,
-                "username": user.username,
-                "email": user.email,
-            }), 200
+                "message": "signed up successfully",
+            }), 201
         except Exception as e:
             return jsonify({
                 "status": False,
@@ -23,11 +20,13 @@ class UserController:
     @staticmethod
     def login(user_data):
         try:
-            token = UserService.login(user_data)
+            response = UserService.login(user_data)
             return jsonify({
                 "status": True,
                 "message": "Logged in successfully",
-                "token": token,
+                "id": response[0].id,
+                "email": response[0].email,
+                "token": response[1],
             }), 200
         except Exception as e:
             return jsonify({
