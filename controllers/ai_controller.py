@@ -8,10 +8,10 @@ class AIController:
         try:
             topic = data.get('topic')
             text = data.get('text')
-            response = AIService.generate_flashcards(topic, text)
+            flashcards = AIService.generate_flashcards(topic, text)
             return jsonify({
                 "status": True,
-                "response":response
+                "flashcards": flashcards["flashcards"],
             }), 200
         except Exception as e:
             return jsonify({

@@ -25,6 +25,7 @@ class UserController:
                 "status": True,
                 "message": "Logged in successfully",
                 "id": response[0].id,
+                "username": response[0].username,
                 "email": response[0].email,
                 "token": response[1],
             }), 200

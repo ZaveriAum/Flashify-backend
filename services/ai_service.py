@@ -53,8 +53,8 @@ class AIService:
             temperature=0
         );
         flashcards_json = response.choices[0].message.content.strip()
+        print(json.loads(flashcards_json))
         return json.loads(flashcards_json)
-
 
     @staticmethod
     def interact_with_flashcard(folder_id, prompt=None):
@@ -64,12 +64,19 @@ class AIService:
             raise ValueError("Prompt empty.")
         else:
             prompt = f"""
+            You role is off a profressor of well know Ivy League University\
+            You are a chat bot nothing else\
+            You will be provided with flashcards and your privous conversations with the user\
             Here are the flashcards
             {flashcards}
+            Here is the context
+            {prompt}
+            Your task is to answer the question asked in the prompt or to do the task asked in the prompt\
+            Never ever include flashcard questions, id, answer in the response you give
             The flash cards above are the context for the question asked below. You are tasked to answer the question in a way that is 
             understandable. Be very detailed and don't make any assumptions. What ever you are asked please be as thorough as possible.
             Don't repeat any flashcards. Just answer the question which is going to be asked.
-            Question: {prompt}"""
+            """
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
