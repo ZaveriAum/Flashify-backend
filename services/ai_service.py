@@ -53,7 +53,6 @@ class AIService:
             temperature=0
         );
         flashcards_json = response.choices[0].message.content.strip()
-        print(json.loads(flashcards_json))
         return json.loads(flashcards_json)
 
     @staticmethod
