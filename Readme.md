@@ -18,18 +18,18 @@
 
 ```plaintext
 📦 Flashify-backend
-├── controllers/         # HTML templates
-├── decorators/          # Static files (CSS, JS, images)
-├── migrations/          # Static files (CSS, JS, images)
-├── models/              # Static files (CSS, JS, images)
-├── routes/              # Static files (CSS, JS, images)
-├── services/            # Static files (CSS, JS, images)
-├── utils/               # Static files (CSS, JS, images)
-├── venv/                # Static files (CSS, JS, images)
-├── .gitignore.py               # Entry point for the Flask app
+├── controllers/         # Handles HTTP requests and defines logic for API endpoints
+├── decorators/          # Custom decorators for reusable functionalities like authentication
+├── migrations/          # Database migration files managed by Flask-Migrate
+├── models/              # Defines database models and schema
+├── routes/              # Organizes API route definitions
+├── services/            # Business logic and service layer for modular functionality
+├── utils/               # Utility functions and helpers used across the project
+├── venv/                # Virtual environment for managing project-specific Python dependencies
+├── .gitignore           # Specifies files and directories to be ignored by Git
 ├── app.py               # Entry point for the Flask app
-├── config.py            # Environment variables (optional)
-├── requirements.txt     # Python dependencies
+├── config.py            # Configuration settings and environment variables
+├── requirements.txt     # Python dependencies for the project
 └── README.md            # Project documentation
 ```
 
