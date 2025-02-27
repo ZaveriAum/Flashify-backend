@@ -38,7 +38,8 @@ class UserService:
             db.session.commit()
             return UserService.generateToken(user["email"])
         except Exception as e:
-            raise AppError(e.message or "Unknown Error", e.statusCode or 500)
+            print(e)
+            raise AppError(getattr(e, "message", "Unknown Error"), getattr(e, "statusCode", 500))
     
     @staticmethod
     def get_user_by_email(email):
@@ -56,23 +57,27 @@ class UserService:
                     raise ValueError("Invalid credentials")
             raise ValueError("User does not exists.")
         except Exception as e:
-            raise AppError(e.message or "Unknown Error", e.statusCode or 500)
+            raise AppError(getattr(e, "message", "Unknown Error"), getattr(e, "statusCode", 500))
     
     @staticmethod
     def refreshToken(cookies):
-        if not cookies.get("jwt"):
-            raise AppError('Forbidden', 403)
-        refreshToken = cookies.get("jwt");
-        decode = jwt.decode(refreshToken, Config.REFRESH_TOKEN_SECRET_KEY, algorithms=["HS256"])
-        user = UserService.get_user_by_email(decode['email'])
-        if not user:
-            raise AppError('Unauthorized', 401)
-        
-        return jwt.encode({
-                        'email': user.email,
-                        'expiration': str(datetime.utcnow() + timedelta(seconds=3600 * 24 * 7)) # one week
-                    },
-                    Config.REFRESH_TOKEN_SECRET_KEY)
+        try:
+            if not cookies.get("jwt"):
+                raise AppError('Forbidden', 403)
+            refreshToken = cookies.get("jwt");
+            decode = jwt.decode(refreshToken, Config.REFRESH_TOKEN_SECRET_KEY, algorithms=["HS256"])
+            user = UserService.get_user_by_email(decode['email'])
+            if not user:
+                raise AppError('Unauthorized', 401)
+            
+            return jwt.encode({
+                            'email': user.email,
+                            'expiration': str(datetime.utcnow() + timedelta(seconds=3600 * 24 * 7)) # one week
+                        },
+                        Config.REFRESH_TOKEN_SECRET_KEY)
+        except Exception as e:
+            raise AppError(getattr(e, "message", "Unknown Error"), getattr(e, "statusCode", 500))
+
     @staticmethod
     def get_user_by_id(user_id):
         return User.query.get(user_id)

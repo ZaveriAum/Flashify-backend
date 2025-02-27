@@ -1,8 +1,8 @@
-"""Initial migration
+"""Explicitly named constraints
 
-Revision ID: 6334afb2e915
+Revision ID: 5c026882e76b
 Revises: 
-Create Date: 2024-12-16 12:47:19.851931
+Create Date: 2025-02-27 00:42:08.250970
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '6334afb2e915'
+revision = '5c026882e76b'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -31,7 +31,7 @@ def upgrade():
     sa.Column('name', sa.String(length=100), nullable=False),
     sa.Column('description', sa.String(length=255), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], name='fk_folders_users'),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('name')
     )
@@ -40,7 +40,7 @@ def upgrade():
     sa.Column('question', sa.Text(), nullable=False),
     sa.Column('answer', sa.Text(), nullable=False),
     sa.Column('folder_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['folder_id'], ['folders.id'], ),
+    sa.ForeignKeyConstraint(['folder_id'], ['folders.id'], name='fk_flashcards_folders'),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###

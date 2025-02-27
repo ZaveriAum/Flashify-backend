@@ -9,6 +9,8 @@ class User(db.Model):
     email = db.Column(db.String(255), nullable=False)
     password = db.Column(db.String(15), nullable=False)
 
+    folders = db.relationship('Folder', backref='user', lazy=True)
+
     def __init__(self, username, email, password):
         self.username = username
         self.email = email

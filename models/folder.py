@@ -6,8 +6,10 @@ class Folder(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False, unique=True)
-    description = db.Column(db.String(255), nullable=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    description = db.Column(db.String(255))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', name="fk_folders_users"), nullable=False)
+
+    flashcards = db.relationship('Flashcard', backref='folder', lazy=True)
 
     def __init__(self, name, description, user_id):
         self.name = name
