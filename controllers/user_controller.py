@@ -1,36 +1,58 @@
 from services.user_service import UserService
-from flask import jsonify
+from flask import jsonify, make_response
 
 class UserController:
     
     @staticmethod
     def signup(user_data):
         try:
-            user = UserService.signup(user_data)
-            return jsonify({
-                "status": True,
-                "message": "signed up successfully",
-            }), 201
+            response = UserService.signup(user_data)
+            res = make_response(jsonify({
+                "accessToken" : response[0]
+            }), 201)
+            res.set_cookie(
+               "jwt",
+                response[1],
+                httponly=True,
+                secure=True,
+                samesite="None",
+                max_age=7 * 24 * 60 * 60  # 1 week 
+            )
+            return res
         except Exception as e:
             return jsonify({
-                "status": False,
                 "message": str(e)
-            }), 400
+            }), getattr(e, "statusCode", 400)
 
     @staticmethod
     def login(user_data):
         try:
             response = UserService.login(user_data)
+            res = make_response(jsonify({
+                "accessToken" : response[0]
+            }), 200)
+            res.set_cookie(
+               "jwt",
+                response[1],
+                httponly=True,
+                secure=True,
+                samesite="None",
+                max_age=7 * 24 * 60 * 60  # 1 week 
+            )
+            return res
+        except Exception as e:
             return jsonify({
-                "status": True,
-                "message": "Logged in successfully",
-                "id": response[0].id,
-                "username": response[0].username,
-                "email": response[0].email,
-                "token": response[1],
+                "message": str(e)
+            }), getattr(e, "statusCode", 400)
+    
+    @staticmethod
+    def refresh(cookies):
+        try:
+            token = UserService.refreshToken(cookies)
+            return jsonify({
+                "refreshToken" : token
             }), 200
         except Exception as e:
             return jsonify({
-                "status": False,
                 "message": str(e)
-            }), 400
+            }), getattr(e, "statusCode", 400)

@@ -1,4 +1,3 @@
-from flask import Blueprint
 from .user_routes import user_blueprint
 from .folder_routes import folder_blueprint
 from .flashcard_routes import flashcard_blueprint
