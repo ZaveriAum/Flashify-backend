@@ -1,12 +1,12 @@
 from services.folder_service import FolderService
-from flask import jsonify
+from flask import jsonify, g
 
 class FolderController:
     
     @staticmethod
-    def get_folders(user_id):
+    def get_folders():
         try:
-            folders = FolderService.get_folders(user_id)
+            folders = FolderService.get_folders()
             return jsonify({
                 "status": True,
                 "message": "Folders retrieved successfully",
@@ -19,9 +19,9 @@ class FolderController:
             }), 400
 
     @staticmethod
-    def create_folder(user_id, folder_data):
+    def create_folder(folder_data):
         try:
-            folder = FolderService.create_folder(user_id, folder_data)
+            folder = FolderService.create_folder(folder_data)
             return jsonify({
                 "status": True,
                 "message": "Folder created successfully",

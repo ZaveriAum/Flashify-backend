@@ -38,13 +38,11 @@ class UserService:
             db.session.commit()
             return UserService.generateToken(user["email"])
         except Exception as e:
-            print(e)
             raise AppError(getattr(e, "message", "Unknown Error"), getattr(e, "statusCode", 500))
     
     @staticmethod
     def get_user_by_email(email):
         return User.query.filter_by(email=email).first()
-
 
     @staticmethod
     def login(data):

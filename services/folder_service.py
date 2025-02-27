@@ -1,18 +1,23 @@
 from models.folder import Folder
+from models.user import User
 from utils.database import db
 from decorators import AuthDecorator
-
+from flask import g
 class FolderService:
     
     @staticmethod
     @AuthDecorator.jwt_auth
-    def get_folders(user_id):
-        folders = Folder.query.filter_by(user_id=user_id).all()
+    def get_folders():
+        email = g.user['email']
+        user_subquery = User.query.with_entities(User.id).filter_by(email=email).subquery()
+        folders = Folder.query.filter(Folder.user_id == user_subquery).all()
         return [folder.to_dict() for folder in folders]
 
     @staticmethod
     @AuthDecorator.jwt_auth
-    def create_folder(user_id, folder):
+    def create_folder(folder):
+        email = g.user['email']
+        user_id = User.query.with_entities(User.id).filter_by(email=email).scalar()
         new_folder = Folder(user_id=user_id, name=folder["name"], description=folder["description"])
         db.session.add(new_folder)
         db.session.commit()
