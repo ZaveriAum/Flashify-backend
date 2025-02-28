@@ -6,8 +6,9 @@ controller = AIController()
 
 @ai_blueprint.route("", methods=["POST"], endpoint="generate")
 def generate():
-    data = request.json
-    return controller.generate_flashcards(data)
+    text = request.form.get('text')
+    file = request.files
+    return controller.generate_flashcards(text, file)
 
 @ai_blueprint.route("/<folder_id>", methods=["POST"], endpoint="interact")
 def interact(folder_id):

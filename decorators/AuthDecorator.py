@@ -8,11 +8,11 @@ from utils.error import AppError
 def jwt_auth(f):
     @wraps(f)
     def wrapper(*args, **kwargs):
-        token = request.headers.get("Authorization")
-        if not token or " " not in token:
-            raise AppError("Forbidden", 403)
-
         try:
+            token = request.headers.get("Authorization")
+            if not token or " " not in token:
+                raise AppError("Forbidden", 403)
+
             token = token.split(" ")[1]
             decode = jwt.decode(token, Config.ACCESS_TOKEN_SECRET_KEY, algorithms=["HS256"])
 
@@ -26,6 +26,5 @@ def jwt_auth(f):
             g.user = decode
             return f(*args, **kwargs)
         except Exception as e:
-            print(e)
             raise AppError(getattr(e, 'message', "Unauthorized"), getattr(e, 'statusCode', 401))
     return wrapper

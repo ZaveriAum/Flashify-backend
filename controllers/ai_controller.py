@@ -4,20 +4,17 @@ from flask import jsonify
 class AIController:
     
     @staticmethod
-    def generate_flashcards(data):
+    def generate_flashcards(text, file):
         try:
-            topic = data.get('topic')
-            text = data.get('text')
-            flashcards = AIService.generate_flashcards(topic, text)
+            flashcards = AIService.generate_flashcards(text, file)
             return jsonify({
-                "status": True,
                 "flashcards": flashcards["flashcards"],
             }), 200
         except Exception as e:
+            print(e)
             return jsonify({
-                "status": False,
                 "message": str(e)
-            }), 400
+            }), getattr(e, "statusCode", 400)
 
     @staticmethod
     def interact_with_flashcards(folder_id, data):
@@ -25,11 +22,9 @@ class AIController:
             prompt = data.get('prompt')
             response = AIService.interact_with_flashcard(folder_id, prompt)
             return jsonify({
-                "status": True,
                 "response": response,
             }), 200
         except Exception as e:
             return jsonify({
-                "status": False,
                 "message": str(e)
-            }), 400
+            }), getattr(e, "statusCode", 400)
