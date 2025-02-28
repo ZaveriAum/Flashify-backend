@@ -2,5 +2,6 @@ from .user_controller import UserController
 from .folder_controller import FolderController
 from .flashcard_controller import FlashCardController
 from .ai_controller import AIController
+from .note_controller import NoteController
 
-__all__ = ["UserController", "FolderController", "FlashCardController", "AIController"]
+__all__ = ["UserController", "FolderController", "FlashCardController", "AIController", "NoteController"]
