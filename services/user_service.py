@@ -52,8 +52,8 @@ class UserService:
                 if check_password_hash(user.password, data["password"]):
                     return UserService.generateToken(email=data["email"])
                 else:
-                    raise ValueError("Invalid credentials")
-            raise ValueError("User does not exists.")
+                    raise AppError("Invalid credentials", 400)
+            raise AppError("User does not exists.", 400)
         except Exception as e:
             raise AppError(getattr(e, "message", "Unknown Error"), getattr(e, "statusCode", 500))
     

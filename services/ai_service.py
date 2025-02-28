@@ -136,7 +136,7 @@ class AIService:
             flashcards = FlashCardService.get_flashcards(folder_id)
             flashcards = [(flashcard["question"], flashcard["answer"]) for flashcard in flashcards]
             if not prompt:
-                raise ValueError("Prompt empty.")
+                raise AppError("Prompt empty", 400)
             else:
                 prompt = f"""
                 Role:
@@ -180,7 +180,7 @@ class AIService:
         try:
             note = NoteService.get_note_content(note_id)
             if not prompt:
-                raise ValueError("Prompt empty.")
+                raise AppError("Prompt empty", 400)
             else:
                 prompt = f"""
                 Role:

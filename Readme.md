@@ -8,9 +8,9 @@
 
 ## 🚀 Features
 
-- Feature 1: Create Flashcards in folders manually.
-- Feature 2: Create Flashcards using ai based on topic or text.
-- Feature 3: Interact with the flashcards using ai.
+- Feature 1: Create Flashcards or notes in folders manually.
+- Feature 2: Create Flashcards or notes using ai based on topic or text.
+- Feature 3: Interact with the flashcards or notes using ai.
 
 ---
 
@@ -28,7 +28,7 @@
 ├── venv/                # Virtual environment for managing project-specific Python dependencies
 ├── .gitignore           # Specifies files and directories to be ignored by Git
 ├── app.py               # Entry point for the Flask app
-├── config.py            # Configuration settings and environment variables
+├── config.py            # Configuration settings
 ├── requirements.txt     # Python dependencies for the project
 └── README.md            # Project documentation
 ```
@@ -66,8 +66,16 @@ venv\Scripts\activate     # On Windows
 pip install -r requirements.txt
 ```
 
-#### Create a config.py file or set them directly in your shell: from the given example.config.py
+#### Create a config.py file: from the given example.config.py
+
+#### Create a database locally with the following command - make sure you set the path to your db
 
 ```bash
-flask run
+flask db upgrade
+```
+
+#### Server is ready to run
+
+```bash
+python app.py
 ```
