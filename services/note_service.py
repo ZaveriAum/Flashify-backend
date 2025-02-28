@@ -44,10 +44,6 @@ class NoteService:
                 db.session.commit()
                 return old_note.to_dict()
         except Exception as e:
-<<<<<<< HEAD
-=======
-            print(e)
->>>>>>> a26eb72b393766313b34b1d73a135d216705b25d
             raise AppError(getattr(e, 'message', 'Unknow Error'), getattr(e, 'statusCode', 400))
 
     @staticmethod
