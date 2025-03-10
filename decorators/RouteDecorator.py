@@ -11,6 +11,7 @@ def validate_request(schema):
                 schema().load(data)
                 return f(*args, **kwargs)
             except ValidationError as err:
-                return jsonify({"errors": err.messages}), 400
+                first_error_message = next((message[0] for message in err.messages.values() if message), None)
+                return jsonify({"message": first_error_message}), 400
         return wrapper
     return route_validator
