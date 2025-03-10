@@ -6,6 +6,8 @@ import jwt
 from datetime import datetime, timedelta 
 from config import Config
 from utils.error import AppError
+from decorators import AuthDecorator
+from flask import g
 
 class UserService:
 
@@ -75,6 +77,16 @@ class UserService:
                         Config.REFRESH_TOKEN_SECRET_KEY)
         except Exception as e:
             raise AppError(getattr(e, "message", "Unknown Error"), getattr(e, "statusCode", 500))
+
+    @staticmethod
+    @AuthDecorator.jwt_auth
+    def get_profile():
+        try:
+            email = g.user['email']
+            user = UserService.get_user_by_email(email)
+            return user.to_dict()
+        except Exception as e:
+            raise AppError(getattr(e, 'message', 'Unknow Error'), getattr(e, 'statusCode', 400))
 
     @staticmethod
     def get_user_by_id(user_id):

@@ -56,3 +56,25 @@ class UserController:
             return jsonify({
                 "message": str(e)
             }), getattr(e, "statusCode", 400)
+    
+    @staticmethod
+    def logout(cookies):
+        try:
+            if not cookies.get("jwt"):
+                return "", 204
+            res = make_response(jsonify({}), 204)
+            res.delete_cookie("jwt", httponly=True, secure=True, samesite="None")
+            return res
+        except Exception as e:
+            return jsonify({"message": str(e)}), getattr(e, "statusCode", 400)
+    
+    @staticmethod
+    def get_profile():
+        try:
+            user = UserService.get_profile()
+            return jsonify({
+                "message": "User profile retrieved successfully",
+                "user": user
+                }), 200
+        except Exception as e:
+            return jsonify({"message": str(e)}), getattr(e, "statusCode", 400)

@@ -16,6 +16,7 @@ class FolderService:
             return [folder.to_dict() for folder in folders]
         except Exception as e:
             raise AppError(getattr(e, 'message', 'Unknow Error'), getattr(e, 'statusCode', 400))
+        
     @staticmethod
     @AuthDecorator.jwt_auth
     def create_folder(folder):

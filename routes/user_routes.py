@@ -22,3 +22,12 @@ def login():
 def refresh():
     cookies = request.cookies
     return controller.refresh(cookies)
+
+@user_blueprint.route("/logout", methods=["POST"], endpoint="logout")
+def logout():
+    cookies = request.cookies
+    return controller.logout(cookies)
+
+@user_blueprint.route("/profile", methods=["GET"], endpoint="profile")
+def profile():
+    return controller.get_profile()
