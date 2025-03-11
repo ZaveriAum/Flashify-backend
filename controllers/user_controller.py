@@ -50,7 +50,7 @@ class UserController:
         try:
             token = UserService.refreshToken(cookies)
             return jsonify({
-                "refreshToken" : token
+                "accessToken" : token
             }), 200
         except Exception as e:
             return jsonify({

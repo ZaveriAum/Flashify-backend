@@ -72,9 +72,9 @@ class UserService:
             
             return jwt.encode({
                             'email': user.email,
-                            'expiration': str(datetime.utcnow() + timedelta(seconds=3600 * 24 * 7)) # one week
+                            'expiration': str(datetime.utcnow() + timedelta(seconds=3600 )) # one hour
                         },
-                        Config.REFRESH_TOKEN_SECRET_KEY)
+                        Config.ACCESS_TOKEN_SECRET_KEY)
         except Exception as e:
             raise AppError(getattr(e, "message", "Unknown Error"), getattr(e, "statusCode", 500))
 
