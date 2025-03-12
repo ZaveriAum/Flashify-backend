@@ -18,7 +18,7 @@ class NoteService:
     def get_notes(folder_id):
         try:
             notes = Note.query.filter_by(folder_id=folder_id).all()
-            return [Note.to_dict() for note in notes]
+            return [note.to_dict() for note in notes]
         except Exception as e:
             raise AppError(getattr(e, 'message', 'Unknow Error'), getattr(e, 'statusCode', 400))
 
